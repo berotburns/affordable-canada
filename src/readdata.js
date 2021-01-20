@@ -6,16 +6,18 @@ const csv = require("fast-csv");
 const writeFile = util.promisify(fs.writeFile);
 
 // List Files
-const bcMaster = './data/bcmaster.csv';
-const novascotiaMaster = './data/novascotiamaster.csv';
-const ontarioMaster = './data/ontariomaster.csv';
-const quebecmaster = './data/quebecmaster.csv'
+const bcMaster = 'data/bcmaster.csv';
+const novascotiaMaster = 'data/novascotiamaster.csv';
+const ontarioMaster = 'data/ontariomaster.csv';
+const quebecmaster = 'data/quebecmaster.csv'
+// const testMaster = 'data/test.csv';
 
 // Create Data
 const bcData = [];
 const novascotiaData = [];
 const ontarioData =[];
 const quebecData =[];
+// const testData = [];
 
 // Write GeoJSON object
 var gj = {
@@ -26,6 +28,25 @@ var gj = {
 // Index JSON Objects together
 var i = 0;
 
+// // Test
+// const testPromise = new Promise((resolve) => {
+//     csv
+//         .parseFile(testMaster, { headers: true })
+//         .on('data', function (data) {
+//             testData.push(data);
+//         })
+//         .on('end', function () {
+//             testData
+//                 .forEach(point => {
+//                     const { longitude, latitude, title, propertytype, provider, description, address, totalunits, affunits, rgiunits, url } = point;
+//                     gj.features.push({ "type": "Feature", "geometry": { "type": "Point", "coordinates": [] }, "properties": { "title": title, "propertytype": propertytype, "provider": provider,  "description": description, "address": address, "totalunits": totalunits, "affunits": affunits, "rgiunits": rgiunits, "url": url } },);
+//                     gj.features[i].geometry.coordinates.push(longitude, latitude);
+//                     i++;
+//                 });
+//             resolve();
+//         });
+// });
+
 // British Columbia 
 const bcPromise = new Promise((resolve) => {
     csv
@@ -35,10 +56,9 @@ const bcPromise = new Promise((resolve) => {
         })
         .on('end', function () {
             bcData
-                .filter(point => !point.hidden)
                 .forEach(point => {
-                    const { longitude, latitude, title, propertytype, provider, description, address, totalunits, affunits, rciunits, url } = point;
-                    gj.features.push({ "type": "Feature", "geometry": { "type": "Point", "coordinates": [] }, "properties": { "title": title, "propertytype": propertytype, "provider": provider,  "description": description, "address": address, "totalunits": totalunits, "affunits": affunits, "rciunits": rciunits, "url": url } },);
+                    const { longitude, latitude, title, propertytype, provider, description, address, totalunits, affunits, rgiunits, url } = point;
+                    gj.features.push({ "type": "Feature", "geometry": { "type": "Point", "coordinates": [] }, "properties": { "title": title, "propertytype": propertytype, "provider": provider,  "description": description, "address": address, "totalunits": totalunits, "affunits": affunits, "rgiunits": rgiunits, "url": url } },);
                     gj.features[i].geometry.coordinates.push(longitude, latitude);
                     i++;
                 });
@@ -55,10 +75,9 @@ const novascotiaPromise = new Promise((resolve) => {
         })
         .on('end', function () {
             novascotiaData
-                .filter(point => !point.hidden)
                 .forEach(point => {
-                    const { longitude, latitude, title, propertytype, provider, description, address, totalunits, affunits, rciunits, url } = point;
-                    gj.features.push({ "type": "Feature", "geometry": { "type": "Point", "coordinates": [] }, "properties": { "title": title, "propertytype": propertytype, "provider": provider,  "description": description, "address": address, "totalunits": totalunits, "affunits": affunits, "rciunits": rciunits, "url": url } },);
+                    const { longitude, latitude, title, propertytype, provider, description, address, totalunits, affunits, rgiunits, url } = point;
+                    gj.features.push({ "type": "Feature", "geometry": { "type": "Point", "coordinates": [] }, "properties": { "title": title, "propertytype": propertytype, "provider": provider,  "description": description, "address": address, "totalunits": totalunits, "affunits": affunits, "rgiunits": rgiunits, "url": url } },);
                     gj.features[i].geometry.coordinates.push(longitude, latitude);
                     i++;
                 });
@@ -75,10 +94,9 @@ const ontarioPromise = new Promise((resolve) => {
         })
         .on('end', function () {
             ontarioData
-                .filter(point => !point.hidden)
                 .forEach(point => {
-                    const { longitude, latitude, title, propertytype, provider, description, address, totalunits, affunits, rciunits, url } = point;
-                    gj.features.push({ "type": "Feature", "geometry": { "type": "Point", "coordinates": [] }, "properties": { "title": title, "propertytype": propertytype, "provider": provider,  "description": description, "address": address, "totalunits": totalunits, "affunits": affunits, "rciunits": rciunits, "url": url } },);
+                    const { longitude, latitude, title, propertytype, provider, description, address, totalunits, affunits, rgiunits, url } = point;
+                    gj.features.push({ "type": "Feature", "geometry": { "type": "Point", "coordinates": [] }, "properties": { "title": title, "propertytype": propertytype, "provider": provider,  "description": description, "address": address, "totalunits": totalunits, "affunits": affunits, "rgiunits": rgiunits, "url": url } },);
                     gj.features[i].geometry.coordinates.push(longitude, latitude);
                     i++;
                 });
@@ -95,10 +113,9 @@ const quebecPromise = new Promise((resolve) => {
         })
         .on('end', function () {
             quebecData
-                .filter(point => !point.hidden)
                 .forEach(point => {
-                    const { longitude, latitude, title, propertytype, provider, description, address, totalunits, affunits, rciunits, url } = point;
-                    gj.features.push({ "type": "Feature", "geometry": { "type": "Point", "coordinates": [] }, "properties": { "title": title, "propertytype": propertytype, "provider": provider,  "description": description, "address": address, "totalunits": totalunits, "affunits": affunits, "rciunits": rciunits, "url": url } },);
+                    const { longitude, latitude, title, propertytype, provider, description, address, totalunits, affunits, rgiunits, url } = point;
+                    gj.features.push({ "type": "Feature", "geometry": { "type": "Point", "coordinates": [] }, "properties": { "title": title, "propertytype": propertytype, "provider": provider,  "description": description, "address": address, "totalunits": totalunits, "affunits": affunits, "rgiunits": rgiunits, "url": url } },);
                     gj.features[i].geometry.coordinates.push(longitude, latitude);
                     i++;
                 });
@@ -114,8 +131,9 @@ Promise.all([
     novascotiaPromise,
     ontarioPromise,
     quebecPromise,
+    // testPromise,
 ])
     .then(() => {
         var json = JSON.stringify(gj);
-        writeFile('./src/data.json', json)
+        writeFile('public/data.json', json)
     });

@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
-    <link href="./src/style.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="/script.js"></script>
+    <link href="/style.css" type="text/css" rel="stylesheet">
     <title>Affordable Canada</title>
 
 </head>
@@ -16,7 +17,7 @@
         <div class="grid-left">
             <div id="home">
                 <div>
-                    <!-- <div class="banner">This website is a work in progres…</div> -->
+                    <div class="banner">This website is a work in progres…</div>
                     <h1>Affordable Canada</h1>
 
                     <p>This site offers an overview of afforable housing in Canada. Affordable housing is any housing
@@ -108,203 +109,27 @@
         <div class="grid-right">
             <div id="static"></div>
             <div id='map'>
-                <div id="filter">All Housing Types<span class="chevron"></span></div>
+                <div id="filter">All Housing Types<span class="chevron"></span>
+                    <div class="filter-options">
+                        <div class="option">
+                            <input type="checkbox" id="option1" value="provider" checked />
+                            <label for="option1">Has Provider</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="option2" value="description" checked />
+                            <label for="option2">Has Description</label>
+                        </div>
+                    </div>
+                </div>
+                <div id="stats">
+                    <p>Current zoom: <span id="zoom"></span></p>
+                </div>
             </div>
         </div>
     </div>
 
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
-
-
-    <!-- Draw Map -->
-    <script>
-
-        mapboxgl.accessToken = 'pk.eyJ1IjoiamJlcm90YnVybnMiLCJhIjoiY2tnZDEycGY5MDJjdjMxb2VmempnZ2l4bCJ9.h2JMkQeM_ktA6GBTffAUsw';
-
-        // Build static map
-        var mapHeight = document.getElementById('map').clientHeight;
-        var mapWidth = document.getElementById('map').clientWidth;
-        var mapURL = "url('https://api.mapbox.com/styles/v1/mapbox/light-v10/static/-96,57,3/" + mapWidth + "x" + mapHeight + "?access_token=pk.eyJ1IjoiamJlcm90YnVybnMiLCJhIjoiY2tnZDEycGY5MDJjdjMxb2VmempnZ2l4bCJ9.h2JMkQeM_ktA6GBTffAUsw')";
-        document.getElementById('static').style.backgroundImage = mapURL;
-
-        // Add Map
-        var map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/light-v10',
-            center: [-96, 57],
-            zoom: 3
-        });
-
-        // Add geolocate control to the map.
-        var geolocate = new mapboxgl.GeolocateControl({
-            positionOptions: {
-                enableHighAccuracy: true
-            },
-            fitBoundsOptions: {
-                maxZoom: 10
-            },
-            showUserLocation: false,
-            trackUserLocation: false
-        });
-
-        map.addControl(new mapboxgl.NavigationControl());
-        map.addControl(geolocate);
-
-        // Import data
-        var json = (function () {
-            var json = null;
-            $.ajax({
-                'async': false,
-                'global': false,
-                'url': "./src/data.json",
-                'dataType': "json",
-                'success': function (data) {
-                    json = data;
-                }
-            });
-            return json;
-        })();
-
-        // Add data once map is loaded
-        map.on('load', function (e) {
-
-            document.getElementById("map").style.visibility = "visible";
-            document.getElementById("static").style.display = "none";
-            geolocate.trigger();
-
-            map.addSource('places', {
-                type: 'geojson',
-                data: json,
-                cluster: true,
-                clusterMaxZoom: 10,
-                clusterRadius: 40
-            });
-
-            // Add cluster layers
-            map.addLayer({
-                id: 'cluster',
-                type: 'circle',
-                source: 'places',
-                filter: ['has', 'point_count'],
-                paint: {
-                    'circle-color': '#ad2831',
-                    'circle-opacity': 0.9,
-                    'circle-radius': [
-                        'step', ['get', 'point_count'],
-                        24,
-                        800,
-                        32
-                    ]
-                }
-            });
-
-            // Text for clusters
-            map.addLayer({
-                id: 'cluster-count',
-                type: 'symbol',
-                source: 'places',
-                filter: ['has', 'point_count'],
-                paint: {
-                    'text-color': '#ffffff',
-                },
-                layout: {
-                    'text-field': '{point_count_abbreviated}',
-                    'text-font': ['Arial Unicode MS Bold'],
-                    'text-size': 13
-                }
-            });
-
-            // Add a symbol layer
-            map.addLayer({
-                id: 'property',
-                type: 'circle',
-                source: 'places',
-                filter: ['!', ['has', 'point_count']],
-                paint: {
-                    'circle-color': '#ad2831',
-                    'circle-radius': 7,
-                    'circle-stroke-width': 1,
-                    'circle-stroke-color': '#ffffff',
-                }
-            });
-
-            // inspect a cluster on click
-            map.on('click', 'cluster', function (e) {
-                var features = map.queryRenderedFeatures(e.point, {
-                    layers: ['cluster']
-                });
-                var clusterId = features[0].properties.cluster_id;
-                map.getSource('places').getClusterExpansionZoom(
-                    clusterId,
-                    function (err, zoom) {
-                        if (err) return;
-
-                        map.easeTo({
-                            center: features[0].geometry.coordinates,
-                            zoom: zoom
-                        });
-                    }
-                );
-            });
-
-            // Click on property
-            map.on('click', 'property', function (e) {
-                var coordinates = e.features[0].geometry.coordinates.slice();
-                var title = e.features[0].properties.title;
-                var description = e.features[0].properties.description;
-                var address = e.features[0].properties.address;
-                var units = e.features[0].properties.totalunits;
-                var url = e.features[0].properties.url;
-
-                // Handle Units Meta
-                if (units > 0) {
-                    units = 'Total units: ' + units;
-                } else {
-                    units = units;
-                }
-
-                new mapboxgl.Popup()
-                    .setLngLat(coordinates)
-                    .setHTML(
-                        '<div id="cardtitle">' + title +
-                        '</div><div id="carddesc">' + description +
-                        '</div><div id="cardmeta">' + address +
-                        '</div><div id="cardmeta">' + units +
-                        '</p></div><div id="cardurl"><a href="' + url + '" target="_blank">More Info</a></div>'
-                    )
-                    .addTo(map);
-            });
-
-            // On Hover
-            map.on('mouseenter', 'cluster', function () {
-                map.getCanvas().style.cursor = 'pointer';
-            });
-            map.on('mouseleave', 'cluster', function () {
-                map.getCanvas().style.cursor = '';
-            });
-
-            map.on('mouseenter', 'property', function () {
-                map.getCanvas().style.cursor = 'pointer';
-            });
-
-            map.on('mouseleave', 'property', function () {
-                map.getCanvas().style.cursor = '';
-            });
-
-        });
-
-        // Calculating the total available units
-        var unitarray = [];
-        for (i = 0; i < json.features.length; i++) { //loop through the array
-            unitarray[i] = parseInt(json.features[i].properties.totalunits, 10); //Do the math!
-            if (isNaN(unitarray[i])) {
-                unitarray[i] = 0;
-            }
-            unitarray[i];
-        }
-        var unitcount = unitarray.reduce((a, b) => a + b, 0)
-        document.getElementById("unitCount").innerHTML = unitcount.toLocaleString();
-    </script>
+    <script src='script.js'></script>
 
 </body>
 
