@@ -1,3 +1,4 @@
+const port = process.env.PORT || 3000;
 const express = require('express');
 const { nextTick } = require('process');
 const favicon = require('serve-favicon');
@@ -16,6 +17,6 @@ app.get ("/",(req,res) => {
     //res.sendFile(__dirname + "/data/data.json");
 });
 
-app.listen(3000, function () {
+app.listen(port, function () {
     console.log("Server is running on localhost:3000");
 });
