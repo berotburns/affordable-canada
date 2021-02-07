@@ -47,19 +47,6 @@ var json = (function () {
     return json;
 })();
 
-// Create map filters
-// var propertyType = [];
-// for (i = 0; i < json.features.length; i++) { //loop through the array
-//     propertyType[i] = json.features[i].properties.propertytype; //Do the math!
-//     if (propertyType[i] == "") {
-//         propertyType[i] = null;
-//     }
-//     propertyType[i];
-// }
-
-// var totals = json.features.length;
-// var empties = propertyType.filter(function (e) { return e }).length;
-
 // Load the map
 // Everything that requires the map to be loaded should live under here
 map.on('load', function (e) {
@@ -74,7 +61,7 @@ map.on('load', function (e) {
     map.addSource('places', {
         type: 'geojson',
         data: json,
-        cluster: false,
+        cluster: true,
         clusterMaxZoom: 10,
         clusterRadius: 40
     });
@@ -84,7 +71,11 @@ map.on('load', function (e) {
         id: 'cluster',
         type: 'circle',
         source: 'places',
-        filter: ['has', 'point_count'],
+        filter: [
+            "all",
+            ['has', 'point_count'],
+            ['!=', 'point_count', zerozero] // hacky way to count clusters at [0,0]
+        ],
         paint: {
             'circle-color': '#ad2831',
             'circle-opacity': 0.9,
@@ -102,7 +93,11 @@ map.on('load', function (e) {
         id: 'cluster-count',
         type: 'symbol',
         source: 'places',
-        filter: ['has', 'point_count'],
+        filter: [
+            "all",
+            ['has', 'point_count'],
+            ['!=', 'point_count', zerozero] // hacky way to count clusters at [0,0]
+        ],
         paint: {
             'text-color': '#ffffff',
         },
@@ -118,11 +113,7 @@ map.on('load', function (e) {
         id: 'property',
         type: 'circle',
         source: 'places',
-        // filter: [
-        //     '!', 
-        //     ['has', 'point_count'],
-        // ],
-        filter: ['==', 'propertytype', 'Seniors'],
+        filter: ['==', 'hidden', ''],
         paint: {
             'circle-color': '#ad2831',
             'circle-radius': 7,
@@ -159,12 +150,19 @@ map.on('load', function (e) {
         var units = e.features[0].properties.totalunits;
         var url = e.features[0].properties.url;
 
-        // Handle Units Meta
+        // Handle Units meta
         if (units > 0) {
             units = 'Total units: ' + units;
         } else {
             units = units;
-        }
+        };
+
+        // Handle URL meta
+        if (url.length > 0) {
+            url = '<a href="' + url + '" target="_blank">More Info</a></div>';
+        } else {
+            url = url;
+        };
 
         new mapboxgl.Popup()
             .setLngLat(coordinates)
@@ -173,7 +171,7 @@ map.on('load', function (e) {
                 '</div><div id="carddesc">' + description +
                 '</div><div id="cardmeta">' + address +
                 '</div><div id="cardmeta">' + units +
-                '</p></div><div id="cardurl"><a href="' + url + '" target="_blank">More Info</a></div>'
+                '</p></div><div id="cardurl">' + url
             )
             .addTo(map);
     });
@@ -205,8 +203,17 @@ for (i = 0; i < json.features.length; i++) { //loop through the array
     }
     unitarray[i];
 }
-var unitcount = unitarray.reduce((a, b) => a + b, 0)
+var unitcount = unitarray.reduce((a, b) => a + b, 0);
 document.getElementById("unitCount").innerHTML = unitcount.toLocaleString();
+
+
+// Calculating number of [0,0] units
+var zerozero = 0;
+for (i = 0; i < json.features.length; i++) { //loop through the array
+    if (json.features[i].geometry.coordinates[0] == 0) {
+        zerozero++;
+    }
+}
 
 // Debugging information
 var zoomlevel = map.getZoom();

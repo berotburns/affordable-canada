@@ -4,12 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
+
+    <!--  Essential META Tags -->
+    <meta property="og:title" content="Affordable Canada">
+    <meta property="og:description" content="An overview of affordable rental housing data in Canada.">
+    <meta property="og:image" content="/thumbnail.png">
+    <meta property="og:url" content="https://affordablecanada.ca">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:site_name" content="Affordable Canada">
+    <meta name="twitter:image:alt" content="Map of Canada with affordable housing">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
     <script type="text/javascript" src="/script.js"></script>
     <link href="/style.css" type="text/css" rel="stylesheet">
     <title>Affordable Canada</title>
-
 </head>
 
 <body>
@@ -17,91 +26,50 @@
         <div class="grid-left">
             <div id="home">
                 <div>
-                    <div class="banner">This website is a work in progres…</div>
                     <h1>Affordable Canada</h1>
-
-                    <p>This site offers an overview of afforable housing in Canada. Affordable housing is any housing
-                        provided by governments, community organizations, non-profits, or private individuals that does
-                        not exceed 30% of household income. <a
-                            href="https://www.cmhc-schl.gc.ca/en/developing-and-renovating/develop-new-affordable-housing/programs-and-information/about-affordable-housing-in-canada"
-                            target="_blank">Learn more.</a>
-                    </p>
-                    <div id="updated">Last updated January 2021</div>
-                    <p>Number of affordable units mapped
+                    <p>Updated: 06/02/21</p>
+                    <p>The largest overview and data aggregation of afforable housing in Canada, in support of the nearly <a
+                            href="https://www12.statcan.gc.ca/census-recensement/2016/dp-pd/chn-biml/index-eng.cfm"
+                            target="_blank">1.7 million households</a> in core housing need.</p>
+                    <p>&nbsp;</p>
+                    <p>Afforable rental units mapped
                         </br>
                         <span id="unitCount">&nbsp;</span>
                     </p>
-                    <p>Canadian households in core housing need
-                        </br>
-                        <span id="dataSpan">1,494,395</span>
+                </div>
+                <div class="section">
+                    <h2>Contribute to the project</h2>
+                    <p>Affordable Canada uses multiple sources to collect data on <a
+                            href="https://www.cmhc-schl.gc.ca/en/developing-and-renovating/develop-new-affordable-housing/programs-and-information/about-affordable-housing-in-canada"
+                            target="_blank">afforable housing</a>. Send us an email if you know of data you think should
+                        be included.</p>
+                    <a class="button" target="_blank"
+                        href="mailto:hello@affordablecanada.ca?subject=Affordable housing data">Send Email</a>
+                </div>
+                <div class="section">
+                    <h2>Access our data</h2>
+                    <p>All of our data is made available for download as CSV files by province and territory.</p>
+                    <p>
+                        <a href="/data/albertamaster.csv">Alberta</br></a>
+                        <a href="">British Columbia</br></a>
+                        <a href="">Manitoba</br></a>
+                        <a href="">New Brunswick</br></a>
+                        <a href="">Newfoundland and Labrador</br></a>
+                        <a href="">Northwest Territories</br></a>
+                        <a href="">Nova Scotia</br></a>
+                        <a href="">Nunavut</br></a>
+                        <a href="">Ontario</br></a>
+                        <a href="">Prince Edward Island</br></a>
+                        <a href="">Quebec</br></a>
+                        <a href="">Saskatchewan</br></a>
+                        <a href="">Yukon</br></a>
                     </p>
-
-                </div>
-                <div class="section">
-                    <h2>Support Affordable Housing</h2>
-                    <p>There is a significant deficit in available affordable housing across Canada. <a href="">How you
-                            can help.</a></p>
-                </div>
-                <div class="section">
-                    <h2>Available Data</h2>
-                    <p>All the avaiable data around affordable housing can be downloaded per province.</p>
-                    </br>
-                    <table>
-                        <tr>
-                            <td id="province">Alberta<span id="csv">csv</span></td>
-                            <td id="download">Download</td>
-                        </tr>
-                        <tr>
-                            <td id="province">British Columbia<span id="csv">csv</span></td>
-                            <td id="download">Download</td>
-                        </tr>
-                        <tr>
-                            <td id="province">Manitoba<span id="csv">csv</span></td>
-                            <td id="download">Download</td>
-                        </tr>
-                        <tr>
-                            <td id="province">New Brunswick<span id="csv">csv</span></td>
-                            <td id="download">Download</td>
-                        </tr>
-                        <tr>
-                            <td id="province">Newfoundland and Labrador<span id="csv">csv</span></td>
-                            <td id="download">Download</td>
-                        </tr>
-                        <tr>
-                            <td id="province">Northwest Territories<span id="csv">csv</span></td>
-                            <td id="download">Download</td>
-                        </tr>
-                        <tr>
-                            <td id="province">Nunavut<span id="csv">csv</span></td>
-                            <td id="download">Download</td>
-                        </tr>
-                        <tr>
-                            <td id="province">Ontario<span id="csv">csv</span></td>
-                            <td id="download">Download</td>
-                        </tr>
-                        <tr>
-                            <td id="province">Prince Edward Island<span id="csv">csv</span></td>
-                            <td id="download">Download</td>
-                        </tr>
-                        <tr>
-                            <td id="province">Quebec<span id="csv">csv</span></td>
-                            <td id="download">Download</td>
-                        </tr>
-                        <tr>
-                            <td id="province">Saskatchewan<span id="csv">csv</span></td>
-                            <td id="download">Download</td>
-                        </tr>
-                        <tr>
-                            <td id="province">Yukon<span id="csv">csv</span></td>
-                            <td id="download">Download</td>
-                        </tr>
-                    </table>
                 </div>
                 <div class="footer">
-                    <p>This site was made by <a href="">Justin Berot-Burns</a>.</p>
-                    <p>If you data you think should be added to the site, or any feedback please <a href=""
-                            target="_blank">send me an email</a>.</p>
-                    <p>Share on <a href="" target="_blank">Facebook</a> or <a href="" target="_blank">Twitter</a>.</p>
+                    <p>Made by <a target="_blank" href="https://twitter.com/berotburns">Justin Berot-Burns</a>.</p>
+                    <p>Get in touch or send us any feedback by <a target="_blank"
+                            href="mailto:hello@affordablecanada.ca">email</a>.</p>
+                    <p>Share on <a href="" target="_blank">Facebook</a> and <a href="" target="_blank">Twitter</a>.</p>
                 </div>
             </div>
         </div>
@@ -109,21 +77,22 @@
         <div class="grid-right">
             <div id="static"></div>
             <div id='map'>
-                <div id="filter">All Housing Types<span class="chevron"></span>
+
+                <!-- Add filter options -->
+                <!-- <div id="filter">All Housing Types<span class="chevron"></span>
                     <div class="filter-options">
                         <div class="option">
-                            <input type="checkbox" id="option1" value="provider" checked />
-                            <label for="option1">Has Provider</label>
+                            <input type="checkbox" id="option1" value="filter" />
+                            <label for="option1">Filter</label>
                         </div>
-                        <div class="option">
-                            <input type="checkbox" id="option2" value="description" checked />
-                            <label for="option2">Has Description</label>
-                        </div>
-                    </div>
-                </div>
-                <div id="stats">
+                </div> -->
+
+                <!-- Debug stats -->
+                <!-- <div id="stats">
                     <p>Current zoom: <span id="zoom"></span></p>
-                </div>
+                    <p>Filter 1: <span id="optiondisplay"></span></p>
+                </div> -->
+
             </div>
         </div>
     </div>
