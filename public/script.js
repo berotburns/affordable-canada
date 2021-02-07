@@ -56,7 +56,7 @@ map.on('load', function (e) {
     document.getElementById("map").style.visibility = "visible";
     
     // Zoom to current location
-    //geolocate.trigger();
+    geolocate.trigger();
 
     map.addSource('places', {
         type: 'geojson',
@@ -216,9 +216,9 @@ for (i = 0; i < json.features.length; i++) { //loop through the array
 }
 
 // Debugging information
-var zoomlevel = map.getZoom();
-document.getElementById("zoom").innerHTML = Math.round(zoomlevel * 100) / 100;
-map.on('move', function () {
-    zoomlevel = map.getZoom();
-    document.getElementById("zoom").innerHTML = Math.round(zoomlevel * 100) / 100;
-});
+// var zoomlevel = map.getZoom();
+// document.getElementById("zoom").innerHTML = Math.round(zoomlevel * 100) / 100;
+// map.on('move', function () {
+//     zoomlevel = map.getZoom();
+//     document.getElementById("zoom").innerHTML = Math.round(zoomlevel * 100) / 100;
+// });
