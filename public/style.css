@@ -52,6 +52,14 @@ p {
     color: var(--secondarytext);
 }
 
+input {
+    border: none;
+}
+
+input[type=text] {
+    display: none;
+}
+
 /* Grid */
 
 .grid {
@@ -291,6 +299,22 @@ label {
 
 .mapboxgl-popup-close-button {
     display: none;
+}
+
+#bugreport {
+    background-image: url('/bug.png');
+    background-size: contain;
+    position: absolute;
+    display: block;
+    width: 12px;
+    height: 12px;
+    margin: 6px;
+    top: 0;
+    right: 0;
+}
+
+#bugreport:hover {
+    cursor: pointer;
 }
 
 /* Card Attributes */

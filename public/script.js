@@ -1,4 +1,3 @@
-
 // Mapbox token
 mapboxgl.accessToken = 'pk.eyJ1IjoiamJlcm90YnVybnMiLCJhIjoiY2tnZDEycGY5MDJjdjMxb2VmempnZ2l4bCJ9.h2JMkQeM_ktA6GBTffAUsw';
 
@@ -54,7 +53,7 @@ map.on('load', function (e) {
     // Replace static map
     document.getElementById("static").style.display = "none";
     document.getElementById("map").style.visibility = "visible";
-    
+
     // Zoom to current location
     geolocate.trigger();
 
@@ -62,8 +61,8 @@ map.on('load', function (e) {
         type: 'geojson',
         data: json,
         cluster: true,
-        clusterMaxZoom: 10,
-        clusterRadius: 40
+        clusterMaxZoom: 11,
+        clusterMinPoints: 10
     });
 
     // Add cluster layers
@@ -81,9 +80,11 @@ map.on('load', function (e) {
             'circle-opacity': 0.9,
             'circle-radius': [
                 'step', ['get', 'point_count'],
-                24,
+                28,
+                100,
+                40,
                 800,
-                32
+                48
             ]
         }
     });
@@ -167,6 +168,7 @@ map.on('load', function (e) {
         new mapboxgl.Popup()
             .setLngLat(coordinates)
             .setHTML(
+                '<form method="post" action="/" onclick="fileBug()"><input type="text" name="bug" value="' + coordinates + '"><input id="bugreport" type="submit" value=""></form>' +
                 '<div id="cardtitle">' + title +
                 '</div><div id="carddesc">' + description +
                 '</div><div id="cardmeta">' + address +
@@ -174,6 +176,7 @@ map.on('load', function (e) {
                 '</p></div><div id="cardurl">' + url
             )
             .addTo(map);
+
     });
 
     // On Hover
@@ -215,10 +218,15 @@ for (i = 0; i < json.features.length; i++) { //loop through the array
     }
 }
 
-// Debugging information
+// Determine zoom level
 // var zoomlevel = map.getZoom();
 // document.getElementById("zoom").innerHTML = Math.round(zoomlevel * 100) / 100;
 // map.on('move', function () {
 //     zoomlevel = map.getZoom();
 //     document.getElementById("zoom").innerHTML = Math.round(zoomlevel * 100) / 100;
 // });
+
+//Bug report
+function fileBug() {
+    alert("A report has been sent to Affordable Canada for this listing. Thanks for helping to improve our data.")
+}
