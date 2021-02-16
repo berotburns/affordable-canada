@@ -168,7 +168,7 @@ map.on('load', function (e) {
         new mapboxgl.Popup()
             .setLngLat(coordinates)
             .setHTML(
-                '<form method="post" action="/" onclick="fileBug()"><input type="text" name="bug" value="' + coordinates + '"><input id="bugreport" type="submit" value=""></form>' +
+                '<div id="bug" onclick="fileBug()"></div>' +
                 '<div id="cardtitle">' + title +
                 '</div><div id="carddesc">' + description +
                 '</div><div id="cardmeta">' + address +

@@ -52,14 +52,6 @@ p {
     color: var(--secondarytext);
 }
 
-input {
-    border: none;
-}
-
-input[type=text] {
-    display: none;
-}
-
 /* Grid */
 
 .grid {
@@ -301,7 +293,7 @@ label {
     display: none;
 }
 
-#bugreport {
+#bug {
     background-image: url('/bug.png');
     background-size: contain;
     position: absolute;
@@ -313,7 +305,7 @@ label {
     right: 0;
 }
 
-#bugreport:hover {
+#bug:hover {
     cursor: pointer;
 }
 
