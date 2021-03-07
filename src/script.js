@@ -37,7 +37,7 @@ var json = (function () {
     $.ajax({
         'async': false,
         'global': false,
-        'url': "https://raw.githubusercontent.com/berotburns/affordable-canada/main/public/data.json",
+        'url': "/src/data.json",
         'dataType': "json",
         'success': function (data) {
             json = data;
@@ -228,5 +228,5 @@ for (i = 0; i < json.features.length; i++) { //loop through the array
 
 //Bug report
 function fileBug() {
-    alert("A report has been sent to Affordable Canada for this listing. Thanks for helping to improve our data.")
+    alert("You have submitted a report for this propoerty. Thanks for helping to improve our data.")
 }
