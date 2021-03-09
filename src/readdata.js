@@ -310,5 +310,5 @@ Promise.all([
 ])
     .then(() => {
         var json = JSON.stringify(gj);
-        writeFile('public/data.json', json)
+        writeFile('src/data.json', json)
     });
