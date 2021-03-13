@@ -352,7 +352,7 @@ label {
     background-color: var(--highlight);
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
     .grid {
         position: relative;
         content: "";
@@ -394,5 +394,15 @@ label {
         width: 100%;
         height: 140vw;
         border-radius: 0px;
+    }
+}
+
+@media only screen  and (min-width : 1824px) {
+    .grid-left {
+        width: 15%;
+    }
+    
+    .grid-right {
+        width: 85%;
     }
 }

@@ -2,7 +2,4 @@
 deployment:
  tasks:
  - export DEPLOYPATH=/home/user/public_html/affordablecanada
- - /bin/cp index.html $DEPLOYPATH
- - /bin/cp data $DEPLOYPATH
- - /bin/cp img $DEPLOYPATH
- - /bin/cp src $DEPLOYPATH
+ - /bin/cp read.js * $DEPLOYPATH

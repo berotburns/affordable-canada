@@ -148,7 +148,7 @@ map.on('load', function (e) {
         var title = e.features[0].properties.title;
         var description = e.features[0].properties.description;
         var address = e.features[0].properties.address;
-        var units = e.features[0].properties.totalunits;
+        var units = e.features[0].properties.units;
         var url = e.features[0].properties.url;
 
         // Handle Units meta
@@ -199,14 +199,22 @@ map.on('load', function (e) {
 
 // Calculating the total available units
 var unitarray = [];
+var blankunits = 0;
+
 for (i = 0; i < json.features.length; i++) { //loop through the array
-    unitarray[i] = parseInt(json.features[i].properties.totalunits, 10); //Do the math!
+    unitarray[i] = parseInt(json.features[i].properties.units, 10); //Do the math!
+
     if (isNaN(unitarray[i])) {
-        unitarray[i] = 0;
+        blankunits ++; // Count propoerties with missing unit data
+        unitarray[i] = 0; //How to count blank unitcount
     }
     unitarray[i];
 }
+
 var unitcount = unitarray.reduce((a, b) => a + b, 0);
+var unitavg = Math.round(unitcount/(json.features.length - blankunits));
+unitcount = unitcount + (blankunits*unitavg);
+
 document.getElementById("unitCount").innerHTML = unitcount.toLocaleString();
 
 
